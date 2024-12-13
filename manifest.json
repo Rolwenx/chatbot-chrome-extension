@@ -1,24 +1,29 @@
 {
   "manifest_version": 3,
-  "name": "Dify Chatbot",
-  "version": "1.5",
-  "description": "This is a chrome extension to inject a dify chatbot on any pages",
+  "name": "Exalt Chatbot",
+  "version": "1.0",
+  "description": "Il s'agit d'une extension Chrome permettant d'injecter un chatbot Exalt distinctif sur des pages spécifiques.",
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://copilot.cloud.microsoft/*",
+        "https://gemini.google.com/*",
+        "https://huggingface.co/chat/*"
+      ],
+
+      "js": ["./scripts/content.js"]
     }
   ],
-  "permissions": ["webRequest", "storage"],
+  "permissions": ["webRequest", "storage", "activeTab",  "scripting"],
   "action": {
-      "default_popup": "options.html",
-      "default_icon": {
-        "16": "images/16.png",
-        "32": "images/32.png",
-        "48": "images/48.png",
-        "128": "images/128.png"
-
-      }
+    "default_popup": "./pages/options.html",
+    "default_icon": {
+      "16": "images/16.png",
+      "32": "images/32.png",
+      "48": "images/48.png",
+      "128": "images/128.png"
+    }
   },
   "icons": {
     "16": "images/16.png",

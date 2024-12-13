@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Modifier le Chatbot</title>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../styles/tailwind.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 py-4 px-4 w-128">
+  <div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-4">
+    <h2 class="text-2xl font-semibold mb-4">Modifier le Chatbot</h2>
+
+    <form>
+      <div class="mb-4">
+        <label for="chatbot-name" class="block font-semibold text-gray-700">Nom du chatbot</label>
+        <input type="text" id="chatbot-name" name="chatbot-name" value=""
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400">
+      </div>
+
+      <div class="mb-4">
+        <label for="chatbot-url" class="block font-semibold text-gray-700">URL du chatbot</label>
+        <input type="text" id="chatbot-url" name="chatbot-url" value=""
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400">
+      </div>
+
+      <div class="mb-4 flex items-center gap-4">
+        <button id="save-button" type="button"
+          class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Sauvegarder</button>
+        <button id="delete-button" type="button"
+          class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:bg-red-600">Supprimer</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="../scripts/edit_chatbot.js"></script>
+</body>
+
+</html>

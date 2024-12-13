@@ -1,16 +1,23 @@
 const storage = chrome.storage.sync;
-chrome.storage.sync.get(['chatbotUrl'], function(result) {
-  window.difyChatbotConfig = { 
-    chatbotUrl: result.chatbotUrl,
-  };
+chrome.storage.sync.get(['chatbotUrl'], function (result) {
+console.log(result.chatbotUrl);
+  if (result.chatbotUrl) {
+    window.exaltChatbotConfig = { 
+      chatbotUrl: result.chatbotUrl
+    };
+    embedChatbot();
+  } else {
+    console.warn("Aucun chatbot actif n'a été configuré.");
+  }
 });
+
 
 document.body.onload = embedChatbot;
 
 async function embedChatbot() {
-  const difyChatbotConfig = window.difyChatbotConfig;
-  if (!difyChatbotConfig) {
-    console.warn('Dify Chatbot Url is empty or is not provided');
+  const exaltChatbotConfig = window.exaltChatbotConfig;
+  if (!exaltChatbotConfig) {
+    console.warn("URL du chatbot Exalt est vide ou n'est pas fournie");
     return;
   }
   const openIcon = `<svg
@@ -49,9 +56,9 @@ async function embedChatbot() {
   function createIframe() {
     const iframe = document.createElement('iframe');
     iframe.allow = "fullscreen;microphone"
-    iframe.title = "dify chatbot bubble window"
-    iframe.id = 'dify-chatbot-bubble-window'
-    iframe.src = difyChatbotConfig.chatbotUrl
+    iframe.title = "exalt chatbot bubble window"
+    iframe.id = 'exalt-chatbot-bubble-window'
+    iframe.src = exaltChatbotConfig.chatbotUrl
     iframe.style.cssText = 'border: none; position: fixed; flex-direction: column; justify-content: space-between; box-shadow: rgba(150, 150, 150, 0.2) 0px 10px 30px 0px, rgba(150, 150, 150, 0.2) 0px 0px 0px 1px; bottom: 6.7rem; right: 1rem; width: 30rem; height: 48rem; border-radius: 0.75rem; display: flex; z-index: 2147483647; overflow: hidden; left: unset; background-color: #F3F4F6;'
     document.body.appendChild(iframe);
   }
@@ -131,12 +138,12 @@ async function embedChatbot() {
     }
   }
 
-  const targetButton = document.getElementById("dify-chatbot-bubble-button");
+  const targetButton = document.getElementById("exalt-chatbot-bubble-button");
 
   if (!targetButton) {
     // create button
     const containerDiv = document.createElement("div");
-    containerDiv.id = 'dify-chatbot-bubble-button';
+    containerDiv.id = 'exalt-chatbot-bubble-button';
     containerDiv.style.cssText = `position: fixed; bottom: 3rem; right: 1rem; width: 50px; height: 50px; border-radius: 25px; background-color: #155EEF; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px; cursor: move; z-index: 2147483647; transition: all 0.2s ease-in-out 0s; left: unset; transform: scale(1); :hover {transform: scale(1.1);}`;
     const displayDiv = document.createElement('div');
     displayDiv.style.cssText = "display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; z-index: 2147483647;";
@@ -147,18 +154,24 @@ async function embedChatbot() {
 
     // add click event to control iframe display
     containerDiv.addEventListener('click', function () {
-      const targetIframe = document.getElementById('dify-chatbot-bubble-window');
+      const targetIframe = document.getElementById('exalt-chatbot-bubble-window');
       if (!targetIframe) {
         createIframe();
+        //console.log("Page content:", document.body.innerHTML);
         displayDiv.innerHTML = closeIcon;
+        chatbotDisplayed = true;
         return;
       }
       if (targetIframe.style.display === "none") {
+        //console.log("Page content:", document.body.innerHTML);
         targetIframe.style.display = "block";
         displayDiv.innerHTML = closeIcon;
+        chatbotDisplayed = true;
+        
       } else {
         targetIframe.style.display = "none";
         displayDiv.innerHTML = openIcon;
+        chatbotDisplayed = false;
       }
     });
   } else {
